@@ -10,13 +10,11 @@ class AtmoLight : public QObject
 {
     Q_OBJECT
 public:
-    explicit AtmoLight(QObject *parent = 0);
+    explicit AtmoLight(QString portName, QObject *parent = 0);
     ~AtmoLight();
     void connectToBoard();
     void sendLightState();
 
-    QString serialPortName() const;
-    void setSerialPortName(const QString &serialPortName);
 
     QList<LEDArea *> ledAreaList() const;
     void setLedAreaList(const QList<LEDArea *> &ledAreaList);

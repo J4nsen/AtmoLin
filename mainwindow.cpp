@@ -9,14 +9,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    AtmoLight *al = new AtmoLight();
-    al->setSerialPortName("/dev/ttyUSB0");
+    AtmoLight *al = new AtmoLight("/dev/atmolight-right");
+
     al->connectToBoard();
     al->sendLightState();
     m_atmoLightList.append(al);
 
-    al = new AtmoLight();
-    al->setSerialPortName("/dev/ttyUSB1");
+    al = new AtmoLight("/dev/atmolight-left");
+
     al->connectToBoard();
     al->sendLightState();
     m_atmoLightList.append(al);

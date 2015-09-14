@@ -1,8 +1,9 @@
 #include "atmolight.h"
 #include <QDebug>
 
-AtmoLight::AtmoLight(QObject *parent) :
-    QObject(parent)
+AtmoLight::AtmoLight(QString portName, QObject *parent) :
+    QObject(parent),
+    m_serialPortName(portName)
 {
     m_serialPort.setBaudRate(38400);
     m_serialPort.setParity(QSerialPort::NoParity);
@@ -43,15 +44,7 @@ void AtmoLight::sendLightState()
     qDebug() << this << "Sending" << command.toHex();
     m_serialPort.write(command);
 }
-QString AtmoLight::serialPortName() const
-{
-    return m_serialPortName;
-}
 
-void AtmoLight::setSerialPortName(const QString &serialPortName)
-{
-    m_serialPortName = serialPortName;
-}
 QList<LEDArea *> AtmoLight::ledAreaList() const
 {
     return m_ledAreaList;
