@@ -2,13 +2,12 @@
 
 LEDArea::LEDArea(QObject *parent) :
     QObject(parent),
-    m_color(0,0,0)
+    m_color(255,145,0)
 {
 }
 
 QColor LEDArea::color() const
-{
-    return m_color;
+{    return m_color;
 }
 
 void LEDArea::setColor(const QColor &color)

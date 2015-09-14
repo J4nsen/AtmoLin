@@ -5,6 +5,7 @@ AtmoLight::AtmoLight(QString portName, QObject *parent) :
     QObject(parent),
     m_serialPortName(portName)
 {
+    m_serialPort.setPortName(m_serialPortName);
     m_serialPort.setBaudRate(38400);
     m_serialPort.setParity(QSerialPort::NoParity);
     m_serialPort.setDataBits(QSerialPort::Data8);
