@@ -17,12 +17,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     atmolight.cpp \
-    ledarea.cpp
+    ledarea.cpp \
+    systraymenu.cpp
 
 HEADERS  += mainwindow.h \
     atmolight.h \
-    ledarea.h
+    ledarea.h \
+    systraymenu.h
 
 FORMS    += mainwindow.ui
 
 include(support/Qt-Color-Widgets/color_widgets.pri)
+
+RESOURCES += \
+    res.qrc

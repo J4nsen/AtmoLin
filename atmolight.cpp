@@ -5,6 +5,8 @@ AtmoLight::AtmoLight(QString portName, QObject *parent) :
     QObject(parent),
     m_serialPortName(portName)
 {
+    this->setObjectName(m_serialPortName);
+
     m_serialPort.setPortName(m_serialPortName);
     m_serialPort.setBaudRate(38400);
     m_serialPort.setParity(QSerialPort::NoParity);
@@ -12,13 +14,16 @@ AtmoLight::AtmoLight(QString portName, QObject *parent) :
     m_serialPort.setStopBits(QSerialPort::OneStop);
 
     for(int i = 0; i<4;i++){
-        LEDArea *ledarea = new LEDArea();
+        LEDArea *ledarea = new LEDArea(i, this);
         m_ledAreaList.append(ledarea);
     }
+
+    connectToBoard();
 }
 
 AtmoLight::~AtmoLight()
 {
+    qDebug() << this << "Quitting";
     m_serialPort.close();
 }
 

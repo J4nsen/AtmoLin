@@ -8,7 +8,8 @@ class LEDArea : public QObject
 {
     Q_OBJECT
 public:
-    explicit LEDArea(QObject *parent = 0);
+    explicit LEDArea(int id, QObject *parent = 0);
+    ~LEDArea();
 
     QColor color() const;
     void setColor(const QColor &color);
@@ -18,6 +19,7 @@ public:
     int blue();
 
 private:
+    int m_id;
     QColor m_color;
 signals:
 

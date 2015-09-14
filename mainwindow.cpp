@@ -1,7 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ledarea.h"
-#include <color_wheel.hpp>
+
+#include <QSettings>
+#include <QDebug>
+#include <QTimer>
+#include <QIcon>
+
+
+#include "systraymenu.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,27 +16,83 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    AtmoLight *al = new AtmoLight("/dev/atmolight-right");
+    // App name
+    QApplication::setOrganizationName("Jan Wiele");
+    QApplication::setOrganizationDomain("wiele.org");
+    QApplication::setApplicationName("AtmoLin");
+    //
 
-    al->connectToBoard();
-    al->sendLightState();
+    // Colorwheel
+    m_cw = new color_widgets::ColorWheel(this);
+    ui->gridLayout->addWidget(m_cw);
+    connect(m_cw, SIGNAL(colorChanged(QColor)), this, SLOT(on_colorChanged(QColor)));
+    //
+
+    // Atmolights
+    AtmoLight *al;
+
+    al = new AtmoLight("/dev/atmolight-right", this);
     m_atmoLightList.append(al);
 
-    al = new AtmoLight("/dev/atmolight-left");
-
-    al->connectToBoard();
-    al->sendLightState();
+    al = new AtmoLight("/dev/atmolight-left", this);
     m_atmoLightList.append(al);
+    //
 
-    color_widgets::ColorWheel *cw = new color_widgets::ColorWheel();
-    ui->gridLayout->addWidget(cw);
+    // Systray
+    m_tray = new QSystemTrayIcon(this);
+    connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(on_systemTrayActivated(QSystemTrayIcon::ActivationReason)));
+    m_tray->setContextMenu(new SystrayMenu(this));
+    m_tray->setIcon(QIcon(":/img/icon"));
+    m_tray->show();
+    //
 
-    connect(cw, SIGNAL(colorChanged(QColor)), this, SLOT(on_colorChanged(QColor)));
+    loadSettings();
 }
 
 MainWindow::~MainWindow()
 {
+    saveSettings();
     delete ui;
+}
+
+void MainWindow::loadSettings()
+{
+    qDebug() << this << "Loading Settings";
+    QSettings s;
+    m_cw->setColor(s.value("color").value<QColor>());
+}
+
+void MainWindow::on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    qDebug() << this << "SystemTray activated. Reason:" << reason;
+    switch(reason){
+    case QSystemTrayIcon::Unknown:{
+
+    }
+    case QSystemTrayIcon::Context:{
+
+    }
+    case QSystemTrayIcon::DoubleClick:{
+
+    }
+    case QSystemTrayIcon::Trigger:{
+        this->show();
+    }
+    case QSystemTrayIcon::MiddleClick:{
+
+    }
+    default:{
+
+    }
+    }
+}
+
+void MainWindow::saveSettings()
+{
+    qDebug() << this << "Saving Settings";
+    QSettings s;
+    s.setValue("color", m_cw->color());
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -48,3 +111,4 @@ void MainWindow::on_colorChanged(QColor color)
         al->sendLightState();
     }
 }
+
