@@ -20,14 +20,16 @@ SOURCES += main.cpp\
     ledarea.cpp \
     modes/abstractmode.cpp \
     modes/onefixedcolor.cpp \
-    modes/individualfixedcolor.cpp
+    modes/individualfixedcolor.cpp \
+    modes/worm.cpp
 
 HEADERS  += mainwindow.h \
     atmolight.h \
     ledarea.h \
     modes/abstractmode.h \
     modes/onefixedcolor.h \
-    modes/individualfixedcolor.h
+    modes/individualfixedcolor.h \
+    modes/worm.h
 
 FORMS    += mainwindow.ui
 

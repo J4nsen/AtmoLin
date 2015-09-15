@@ -9,6 +9,7 @@
 
 #include "modes/onefixedcolor.h"
 #include "modes/individualfixedcolor.h"
+#include "modes/worm.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -49,7 +50,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Fill Combobox
     connect(ui->comboBox_mode, SIGNAL(currentTextChanged(QString)), this, SLOT(on_modeChanged(QString)));
-    ui->comboBox_mode->addItems(QStringList() << "One Fixed Color" << "Individual Fixed Color");
+    ui->comboBox_mode->addItems(QStringList()
+                                << "One Fixed Color"
+                                << "Individual Fixed Color"
+                                << "Worm"
+                                );
 
     loadSettings();
 }
@@ -121,6 +126,9 @@ void MainWindow::on_modeChanged(QString mode)
         m_mode = new IndividualFixedColor(m_ledAreaListOrdered);
     }
 
+    if(mode == "Worm"){
+        m_mode = new Worm(m_ledAreaListOrdered);
+    }
     //
     if(m_mode){
         connect(m_mode, SIGNAL(updateLEDs()), this, SLOT(on_updateLEDs()));
