@@ -1,38 +1,41 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ledarea.h"
 
 #include <QSettings>
 #include <QDebug>
 #include <QTimer>
 #include <QIcon>
+#include <QList>
+
+#include "modes/onefixedcolor.h"
+#include "modes/individualfixedcolor.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_mode(0)
 {
     ui->setupUi(this);
 
+    connect(QApplication::instance(), SIGNAL(aboutToQuit()), this, SLOT(on_aboutToQuit()));
     // App name
     QApplication::setOrganizationName("Jan Wiele");
     QApplication::setOrganizationDomain("wiele.org");
     QApplication::setApplicationName("AtmoLin");
     //
 
-    // Colorwheel
-    m_cw = new color_widgets::ColorWheel(this);
-    ui->gridLayout->addWidget(m_cw);
-    connect(m_cw, SIGNAL(colorChanged(QColor)), this, SLOT(on_colorChanged(QColor)));
+    // Atmolights
+    m_atmoLightList.append(new AtmoLight("/dev/atmolight-right", QList<int>() << 0 << 1 << 2 << 3, this));
+    m_atmoLightList.append(new AtmoLight("/dev/atmolight-left", QList<int>() << 0 << 1 << 2 << 3, this));
     //
 
-    // Atmolights
-    AtmoLight *al;
-
-    al = new AtmoLight("/dev/atmolight-right", this);
-    m_atmoLightList.append(al);
-
-    al = new AtmoLight("/dev/atmolight-left", this);
-    m_atmoLightList.append(al);
+    // Create ordered list
+    foreach(AtmoLight *al, m_atmoLightList){
+        for(int i = 0; i<al->ledAreaList().size(); i++){
+            m_ledAreaListOrdered.append(al->ledAreaList().at(al->ledAreaOrderList()[i]));
+        }
+    }
+    qDebug() << this << "Created Ordered List" << m_ledAreaListOrdered;
     //
 
     // Systray
@@ -44,12 +47,16 @@ MainWindow::MainWindow(QWidget *parent) :
     m_tray->show();
     //
 
+    // Fill Combobox
+    connect(ui->comboBox_mode, SIGNAL(currentTextChanged(QString)), this, SLOT(on_modeChanged(QString)));
+    ui->comboBox_mode->addItems(QStringList() << "One Fixed Color" << "Individual Fixed Color");
+
     loadSettings();
 }
 
 MainWindow::~MainWindow()
 {
-    saveSettings();
+
     delete ui;
 }
 
@@ -57,7 +64,7 @@ void MainWindow::loadSettings()
 {
     qDebug() << this << "Loading Settings";
     QSettings s;
-    m_cw->setColor(s.value("color").value<QColor>());
+
 }
 
 void MainWindow::on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason)
@@ -85,27 +92,52 @@ void MainWindow::on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason
     }
 }
 
+void MainWindow::on_updateLEDs()
+{
+    qDebug() << this << "Updating LEDs";
+    foreach (AtmoLight *al, m_atmoLightList) {
+        al->sendLightState();
+    }
+}
+
+void MainWindow::on_aboutToQuit()
+{
+    if(m_mode) delete m_mode;
+    saveSettings();
+}
+
+void MainWindow::on_modeChanged(QString mode)
+{
+    if(m_mode){
+        delete m_mode;
+        m_mode = 0;
+    }
+
+    //
+    if(mode == "One Fixed Color"){
+        m_mode = new OneFixedColor(m_ledAreaListOrdered);
+    }
+    if(mode == "Individual Fixed Color"){
+        m_mode = new IndividualFixedColor(m_ledAreaListOrdered);
+    }
+
+    //
+    if(m_mode){
+        connect(m_mode, SIGNAL(updateLEDs()), this, SLOT(on_updateLEDs()));
+        ui->gridLayout->addWidget(m_mode->widget());
+
+    }
+
+}
+
 void MainWindow::saveSettings()
 {
     qDebug() << this << "Saving Settings";
     QSettings s;
-    s.setValue("color", m_cw->color());
+
 }
 
 void MainWindow::on_actionQuit_triggered()
 {
     QApplication::instance()->quit();
 }
-
-void MainWindow::on_colorChanged(QColor color)
-{
-    foreach(AtmoLight *al, m_atmoLightList){
-        foreach(LEDArea *led, al->ledAreaList()){
-            led->setColor(color);
-        }
-    }
-    foreach(AtmoLight *al, m_atmoLightList){
-        al->sendLightState();
-    }
-}
-

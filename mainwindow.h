@@ -3,9 +3,10 @@
 
 #include <QMainWindow>
 #include <QColor>
-#include <color_wheel.hpp>
 #include "atmolight.h"
 #include <QSystemTrayIcon>
+#include "ledarea.h"
+#include "modes/abstractmode.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,16 +22,21 @@ public:
 
 private slots:
     void on_actionQuit_triggered();
-    void on_colorChanged(QColor color);
     void loadSettings();
     void on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason);
+    void on_updateLEDs();
+    void on_aboutToQuit();
+    void on_modeChanged(QString mode);
 
 private:
     Ui::MainWindow *ui;
     QList<AtmoLight*> m_atmoLightList;
-    QSystemTrayIcon *m_tray;
+    QList<LEDArea*> m_ledAreaListOrdered;
 
-    color_widgets::ColorWheel *m_cw;
+    QSystemTrayIcon *m_tray;
+    QColor m_oldColor;
+
+    AbstractMode *m_mode;
 
 
     void saveSettings();

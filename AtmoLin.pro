@@ -17,11 +17,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     atmolight.cpp \
-    ledarea.cpp
+    ledarea.cpp \
+    modes/abstractmode.cpp \
+    modes/onefixedcolor.cpp \
+    modes/individualfixedcolor.cpp
 
 HEADERS  += mainwindow.h \
     atmolight.h \
-    ledarea.h
+    ledarea.h \
+    modes/abstractmode.h \
+    modes/onefixedcolor.h \
+    modes/individualfixedcolor.h
 
 FORMS    += mainwindow.ui
 

@@ -1,9 +1,10 @@
 #include "atmolight.h"
 #include <QDebug>
 
-AtmoLight::AtmoLight(QString portName, QObject *parent) :
+AtmoLight::AtmoLight(QString portName, QList<int> order, QObject *parent) :
     QObject(parent),
-    m_serialPortName(portName)
+    m_serialPortName(portName),
+    m_ledAreaOrderList(order)
 {
     this->setObjectName(m_serialPortName);
 
@@ -17,6 +18,7 @@ AtmoLight::AtmoLight(QString portName, QObject *parent) :
         LEDArea *ledarea = new LEDArea(i, this);
         m_ledAreaList.append(ledarea);
     }
+
 
     connectToBoard();
 }
@@ -60,5 +62,15 @@ void AtmoLight::setLedAreaList(const QList<LEDArea *> &ledAreaList)
 {
     m_ledAreaList = ledAreaList;
 }
+QList<int> AtmoLight::ledAreaOrderList() const
+{
+    return m_ledAreaOrderList;
+}
+
+void AtmoLight::setLedAreaOrderList(const QList<int> &ledAreaOrderList)
+{
+    m_ledAreaOrderList = ledAreaOrderList;
+}
+
 
 
