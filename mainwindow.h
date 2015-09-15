@@ -21,8 +21,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionQuit_triggered();
     void loadSettings();
+    void loadAtmoLights();
+    void on_actionQuit_triggered();
+
     void on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason);
     void on_updateLEDs();
     void on_aboutToQuit();

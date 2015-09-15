@@ -26,6 +26,11 @@ IndividualFixedColor::IndividualFixedColor(QList<LEDArea *> leds, QObject *paren
 IndividualFixedColor::~IndividualFixedColor()
 {
     delete m_widget;
+    QSettings s;
+    s.beginGroup(objectName());
+    for(int i = 0; i < m_ledAreaListOrdered.size(); i++){
+        s.setValue(QString::number(i), m_ledAreaListOrdered[i]->color());
+    }
     qDebug() << this << "Quitting";
 }
 
@@ -38,5 +43,24 @@ void IndividualFixedColor::on_colorChanged(QColor color)
 {
     m_ledAreaListOrdered[m_spinBox->value()]->setColor(color);
     emit updateLEDs();
+}
+
+void IndividualFixedColor::on_loadSettingsTimeOut()
+{
+    QSettings s;
+    s.beginGroup(objectName());
+    QStringList keys = s.childKeys();
+    qDebug() << this << keys;
+    int i = 0;
+    if(keys.size() >= m_ledAreaListOrdered.size()){
+        foreach(LEDArea *led, m_ledAreaListOrdered){
+            qDebug() << this << "Setting color";
+            led->setColor(s.value(keys[i]).value<QColor>());
+            i++;
+        }
+        emit updateLEDs();
+    }
+
+
 }
 

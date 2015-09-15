@@ -28,19 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //
 
     // Atmolights
-    m_atmoLightList.append(new AtmoLight("/dev/atmolight-right", QList<int>() << 1 << 3 << 2 << 0, this));
-    m_atmoLightList.append(new AtmoLight("/dev/atmolight-left", QList<int>() << 3 << 2 << 0 << 1, this));
-    //m_atmoLightList.append(new AtmoLight("/dev/pts/10", QList<int>() << 1 << 3 << 2 << 0, this));
-    //m_atmoLightList.append(new AtmoLight("/dev/pts/7", QList<int>() << 3 << 2 << 0 << 1, this));
-    //
-
-    // Create ordered list
-    foreach(AtmoLight *al, m_atmoLightList){
-        for(int i = 0; i<al->ledAreaList().size(); i++){
-            m_ledAreaListOrdered.append(al->ledAreaList().at(al->ledAreaOrderList()[i]));
-        }
-    }
-    qDebug() << this << "Created Ordered List" << m_ledAreaListOrdered;
+    loadAtmoLights();
     //
 
     // Systray
@@ -77,6 +65,40 @@ void MainWindow::loadSettings()
 {
     qDebug() << this << "Loading Settings";
     QSettings s;
+
+
+}
+
+void MainWindow::loadAtmoLights()
+{
+    qDebug() << this << "Loading Atmolights";
+    QSettings s;
+    s.beginGroup("AtmoLights");
+    QStringList keys = s.childGroups();
+
+    foreach(QString key, keys){
+        s.beginGroup(key);
+        QString port = s.value("port", "").toString();
+        QStringList orderAsStrings = s.value("order").toStringList();
+
+        QList<int> orderAsInts;
+        foreach (QString orderItem, orderAsStrings) {
+            orderAsInts << orderItem.toInt();
+        }
+        qDebug() << this << "Creating Atmolight" << port << "with order" << orderAsStrings;
+        m_atmoLightList.append(new AtmoLight(port, orderAsInts, this));
+
+        s.endGroup();
+    }
+
+    // Create ordered list
+    foreach(AtmoLight *al, m_atmoLightList){
+        for(int i = 0; i<al->ledAreaList().size(); i++){
+            m_ledAreaListOrdered.append(al->ledAreaList().at(al->ledAreaOrderList()[i]));
+        }
+    }
+    qDebug() << this << "Created Ordered List" << m_ledAreaListOrdered;
+    //
 
 }
 
@@ -145,7 +167,6 @@ void MainWindow::on_modeChanged(QString mode)
     if(m_mode){
         connect(m_mode, SIGNAL(updateLEDs()), this, SLOT(on_updateLEDs()));
         ui->gridLayout->addWidget(m_mode->widget());
-
     }
 
 }
@@ -154,7 +175,14 @@ void MainWindow::saveSettings()
 {
     qDebug() << this << "Saving Settings";
     QSettings s;
-
+    s.beginGroup("Test");
+    s.beginGroup("SubGroup");
+    s.setValue("bla", QStringList() << "1" << "2");
+    s.endGroup();
+    s.beginGroup("1");
+    s.setValue("bla", QStringList() << "1" << "2");
+    s.setValue("port", "/dev/atmolight-left");
+    s.endGroup();
 }
 
 void MainWindow::on_actionQuit_triggered()

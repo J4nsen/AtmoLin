@@ -9,8 +9,7 @@ OneFixedColor::OneFixedColor(QList<LEDArea*> leds, QObject *parent) :
     qDebug() << this << "Created";
     m_cw = new color_widgets::ColorWheel();
     connect(m_cw, SIGNAL(colorChanged(QColor)), this, SLOT(on_colorChanged(QColor)));
-    QSettings s;
-    m_cw->setColor(s.value(objectName()).value<QColor>());
+
 }
 
 OneFixedColor::~OneFixedColor()
@@ -28,8 +27,15 @@ QWidget *OneFixedColor::widget()
 
 void OneFixedColor::on_colorChanged(QColor color)
 {
+    qDebug() << this << "Color Changed";
     foreach (LEDArea *led, m_ledAreaListOrdered) {
         led->setColor(color);
     }
     emit updateLEDs();
+}
+
+void OneFixedColor::on_loadSettingsTimeOut()
+{
+    QSettings s;
+    m_cw->setColor(s.value(objectName()).value<QColor>());
 }

@@ -17,6 +17,7 @@ signals:
 public slots:
 private slots:
     void on_colorChanged(QColor color);
+    void on_loadSettingsTimeOut();
 
 };
 

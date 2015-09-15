@@ -14,7 +14,7 @@ AtmoLight::AtmoLight(QString portName, QList<int> order, QObject *parent) :
     m_serialPort.setDataBits(QSerialPort::Data8);
     m_serialPort.setStopBits(QSerialPort::OneStop);
 
-    for(int i = 0; i<4;i++){
+    for(int i = 0; i<m_ledAreaOrderList.size();i++){
         LEDArea *ledarea = new LEDArea(i, this);
         m_ledAreaList.append(ledarea);
     }
@@ -31,7 +31,10 @@ AtmoLight::~AtmoLight()
 
 void AtmoLight::connectToBoard()
 {
-    m_serialPort.open(QIODevice::WriteOnly);
+    if(m_serialPort.open(QIODevice::WriteOnly)){
+        qDebug() << this << "Opened port";
+    }
+    else qWarning() << this << "Could not open port";
 }
 
 void AtmoLight::sendLightState()
