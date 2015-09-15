@@ -36,6 +36,7 @@ QWidget *IndividualFixedColor::widget()
 
 void IndividualFixedColor::on_colorChanged(QColor color)
 {
+    qDebug() << this << "Color changed to" << color;
     m_ledAreaListOrdered[m_spinBox->value()]->setColor(color);
     emit updateLEDs();
 }
