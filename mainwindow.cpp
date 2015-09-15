@@ -28,10 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //
 
     // Atmolights
-    //m_atmoLightList.append(new AtmoLight("/dev/atmolight-right", QList<int>() << 1 << 3 << 2 << 0, this));
-    //m_atmoLightList.append(new AtmoLight("/dev/atmolight-left", QList<int>() << 3 << 2 << 0 << 1, this));
-    m_atmoLightList.append(new AtmoLight("/dev/pts/10", QList<int>() << 1 << 3 << 2 << 0, this));
-    m_atmoLightList.append(new AtmoLight("/dev/pts/7", QList<int>() << 3 << 2 << 0 << 1, this));
+    m_atmoLightList.append(new AtmoLight("/dev/atmolight-right", QList<int>() << 1 << 3 << 2 << 0, this));
+    m_atmoLightList.append(new AtmoLight("/dev/atmolight-left", QList<int>() << 3 << 2 << 0 << 1, this));
+    //m_atmoLightList.append(new AtmoLight("/dev/pts/10", QList<int>() << 1 << 3 << 2 << 0, this));
+    //m_atmoLightList.append(new AtmoLight("/dev/pts/7", QList<int>() << 3 << 2 << 0 << 1, this));
     //
 
     // Create ordered list

@@ -27,7 +27,7 @@ Flaschendrehen::Flaschendrehen(QList<LEDArea *> leds, QObject *parent) :
     //
     m_dimTimer = new QTimer(this);
     connect(m_dimTimer, SIGNAL(timeout()), this, SLOT(on_dimTimerTimeout()));
-    m_dimTimer->setInterval(50);
+    m_dimTimer->setInterval(30);
     //
 
     startRoundTimer();
@@ -88,7 +88,7 @@ void Flaschendrehen::on_dimTimerTimeout()
 {
     int i = 0;
     foreach(LEDArea *led, m_ledAreaListOrdered){
-        if(i != m_randLight) led->setColor(led->color().darker(102));
+        if(i != m_randLight) led->setColor(led->color().darker(110));
         i++;
     }
     emit updateLEDs();
