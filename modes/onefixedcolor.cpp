@@ -27,7 +27,7 @@ QWidget *OneFixedColor::widget()
 
 void OneFixedColor::on_colorChanged(QColor color)
 {
-    qDebug() << this << "Color Changed";
+
     foreach (LEDArea *led, m_ledAreaListOrdered) {
         led->setColor(color);
     }

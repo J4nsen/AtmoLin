@@ -21,7 +21,9 @@ signals:
 public slots:
 private slots:
     void on_colorChanged(QColor color);
+    void on_spinBoxValueChanged(int val);
     void on_loadSettingsTimeOut();
+
 
 };
 
