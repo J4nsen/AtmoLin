@@ -49,7 +49,7 @@ void AtmoLight::sendLightState()
         command.append(color);
     }
 
-    qDebug() << this << "Sending" << command.toHex();
+    //qDebug() << this << "Sending" << command.toHex();
     m_serialPort.write(command);
 }
 
