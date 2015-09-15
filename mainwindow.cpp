@@ -4,12 +4,14 @@
 #include <QSettings>
 #include <QDebug>
 #include <QTimer>
+#include <QTime>
 #include <QIcon>
 #include <QList>
 
 #include "modes/onefixedcolor.h"
 #include "modes/individualfixedcolor.h"
 #include "modes/worm.h"
+#include "modes/flaschendrehen.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,8 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //
 
     // Atmolights
-    m_atmoLightList.append(new AtmoLight("/dev/atmolight-right", QList<int>() << 1 << 3 << 2 << 0, this));
-    m_atmoLightList.append(new AtmoLight("/dev/atmolight-left", QList<int>() << 3 << 2 << 0 << 1, this));
+    //m_atmoLightList.append(new AtmoLight("/dev/atmolight-right", QList<int>() << 1 << 3 << 2 << 0, this));
+    //m_atmoLightList.append(new AtmoLight("/dev/atmolight-left", QList<int>() << 3 << 2 << 0 << 1, this));
+    m_atmoLightList.append(new AtmoLight("/dev/pts/10", QList<int>() << 1 << 3 << 2 << 0, this));
+    m_atmoLightList.append(new AtmoLight("/dev/pts/7", QList<int>() << 3 << 2 << 0 << 1, this));
     //
 
     // Create ordered list
@@ -54,14 +58,18 @@ MainWindow::MainWindow(QWidget *parent) :
                                 << "One Fixed Color"
                                 << "Individual Fixed Color"
                                 << "Worm"
+                                << "Flaschendrehen"
                                 );
+
+    // Seed for RNG
+    qsrand(QTime::currentTime().msec());
+    //
 
     loadSettings();
 }
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
 }
 
@@ -99,7 +107,7 @@ void MainWindow::on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason
 
 void MainWindow::on_updateLEDs()
 {
-    qDebug() << this << "Updating LEDs";
+    //qDebug() << this << "Updating LEDs";
     foreach (AtmoLight *al, m_atmoLightList) {
         al->sendLightState();
     }
@@ -128,6 +136,10 @@ void MainWindow::on_modeChanged(QString mode)
 
     if(mode == "Worm"){
         m_mode = new Worm(m_ledAreaListOrdered);
+    }
+
+    if(mode == "Flaschendrehen"){
+        m_mode = new Flaschendrehen(m_ledAreaListOrdered);
     }
     //
     if(m_mode){
