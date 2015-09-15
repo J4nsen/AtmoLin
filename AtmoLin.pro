@@ -17,13 +17,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     atmolight.cpp \
-    ledarea.cpp \
-    systraymenu.cpp
+    ledarea.cpp
 
 HEADERS  += mainwindow.h \
     atmolight.h \
-    ledarea.h \
-    systraymenu.h
+    ledarea.h
 
 FORMS    += mainwindow.ui
 

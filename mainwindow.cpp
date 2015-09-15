@@ -7,9 +7,6 @@
 #include <QTimer>
 #include <QIcon>
 
-
-#include "systraymenu.h"
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -42,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_tray = new QSystemTrayIcon(this);
     connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(on_systemTrayActivated(QSystemTrayIcon::ActivationReason)));
-    m_tray->setContextMenu(new SystrayMenu(this));
+    m_tray->setContextMenu(ui->menuBar->findChildren<QMenu*>().first());
     m_tray->setIcon(QIcon(":/img/icon"));
     m_tray->show();
     //

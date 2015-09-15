@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>AtmoLin</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/img/icon</normaloff>:/img/icon</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
@@ -31,7 +35,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Fi&amp;le</string>
+     <string>A&amp;tmoLin</string>
     </property>
     <addaction name="actionQuit"/>
    </widget>
@@ -45,6 +49,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>
