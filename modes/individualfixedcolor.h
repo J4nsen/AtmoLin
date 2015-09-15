@@ -4,6 +4,7 @@
 #include "abstractmode.h"
 #include <color_wheel.hpp>
 #include <QSpinBox>
+#include <QVBoxLayout>
 
 class IndividualFixedColor : public AbstractMode
 {
@@ -15,6 +16,7 @@ public:
 private:
     color_widgets::ColorWheel *m_cw;
     QWidget *m_widget;
+    QVBoxLayout *m_layout;
     QSpinBox *m_spinBox;
 signals:
 

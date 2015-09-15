@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
                                 << "Flaschendrehen"
                                 );
 
+    //
+
     // Seed for RNG
     qsrand(QTime::currentTime().msec());
     //
@@ -65,8 +67,6 @@ void MainWindow::loadSettings()
 {
     qDebug() << this << "Loading Settings";
     QSettings s;
-
-
 }
 
 void MainWindow::loadAtmoLights()
@@ -166,7 +166,7 @@ void MainWindow::on_modeChanged(QString mode)
     //
     if(m_mode){
         connect(m_mode, SIGNAL(updateLEDs()), this, SLOT(on_updateLEDs()));
-        ui->gridLayout->addWidget(m_mode->widget());
+        ui->verticalLayout_modeLayout->addWidget(m_mode->widget());
     }
 
 }
@@ -175,14 +175,6 @@ void MainWindow::saveSettings()
 {
     qDebug() << this << "Saving Settings";
     QSettings s;
-    s.beginGroup("Test");
-    s.beginGroup("SubGroup");
-    s.setValue("bla", QStringList() << "1" << "2");
-    s.endGroup();
-    s.beginGroup("1");
-    s.setValue("bla", QStringList() << "1" << "2");
-    s.setValue("port", "/dev/atmolight-left");
-    s.endGroup();
 }
 
 void MainWindow::on_actionQuit_triggered()
