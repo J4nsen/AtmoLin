@@ -24,7 +24,7 @@ private:
 signals:
 
 public slots:
-
+    void setHexColor(QString hexColor);
 };
 
 #endif // LEDAREA_H

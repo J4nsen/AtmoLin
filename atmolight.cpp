@@ -1,5 +1,6 @@
 #include "atmolight.h"
 #include <QDebug>
+#include <QtDBus/QtDBus>
 
 AtmoLight::AtmoLight(QString portName, QList<int> order, QObject *parent) :
     QObject(parent),

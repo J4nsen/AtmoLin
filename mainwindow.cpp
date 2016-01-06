@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QSettings>
+#include <QtDBus/QtDBus>
 #include <QDebug>
 #include <QTimer>
 #include <QTime>
@@ -56,6 +57,22 @@ MainWindow::MainWindow(QWidget *parent) :
     //
 
     loadSettings();
+
+    if (!QDBusConnection::sessionBus().isConnected()) {
+        qWarning("Cannot connect to the D-Bus session bus.\n"
+                 "Please check your system settings and try again.\n");
+    }
+    else{
+        qDebug() << this << "Connected to DBus";
+        if (!QDBusConnection::sessionBus().registerService("org.wiele.AtmoLin")) {
+            qDebug() << this << QDBusConnection::sessionBus().lastError().message();
+        }
+        else{
+            qDebug() << this << "Registered DBus Service";
+            QDBusConnection::sessionBus().registerObject("/LEDs/0", new LEDArea(0), QDBusConnection::ExportAllSlots);
+            QDBusConnection::sessionBus().registerObject("/LEDs/1", new LEDArea(1), QDBusConnection::ExportAllSlots);
+        }
+    }
 }
 
 MainWindow::~MainWindow()

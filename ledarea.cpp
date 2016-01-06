@@ -38,3 +38,9 @@ int LEDArea::blue()
     return m_color.blue();
 }
 
+void LEDArea::setHexColor(QString hexColor)
+{
+    qDebug() << this << hexColor;
+    setColor(QColor(hexColor));
+}
+
