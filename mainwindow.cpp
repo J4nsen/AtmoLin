@@ -13,6 +13,7 @@
 #include "modes/individualfixedcolor.h"
 #include "modes/worm.h"
 #include "modes/flaschendrehen.h"
+#include "modes/remotedbus.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -69,8 +70,15 @@ MainWindow::MainWindow(QWidget *parent) :
         }
         else{
             qDebug() << this << "Registered DBus Service";
-            QDBusConnection::sessionBus().registerObject("/LEDs/0", new LEDArea(0), QDBusConnection::ExportAllSlots);
-            QDBusConnection::sessionBus().registerObject("/LEDs/1", new LEDArea(1), QDBusConnection::ExportAllSlots);
+            RemoteDBus *remotedbus = new RemoteDBus(m_ledAreaListOrdered);
+            connect(remotedbus, SIGNAL(updateLEDs()), this, SLOT(on_updateLEDs()));
+            QDBusConnection::sessionBus().registerObject("/", remotedbus, QDBusConnection::ExportAllSlots);
+            int i = 0;
+            foreach(LEDArea *ledarea, m_ledAreaListOrdered){
+                QDBusConnection::sessionBus().registerObject("/LEDs/"+QString::number(i), ledarea, QDBusConnection::ExportAllSlots);
+                i++;
+            }
+
         }
     }
 }
@@ -146,7 +154,6 @@ void MainWindow::on_systemTrayActivated(QSystemTrayIcon::ActivationReason reason
 
 void MainWindow::on_updateLEDs()
 {
-    //qDebug() << this << "Updating LEDs";
     foreach (AtmoLight *al, m_atmoLightList) {
         al->sendLightState();
     }

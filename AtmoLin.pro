@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     modes/onefixedcolor.cpp \
     modes/individualfixedcolor.cpp \
     modes/worm.cpp \
-    modes/flaschendrehen.cpp
+    modes/flaschendrehen.cpp \
+    modes/remotedbus.cpp
 
 HEADERS  += mainwindow.h \
     atmolight.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     modes/onefixedcolor.h \
     modes/individualfixedcolor.h \
     modes/worm.h \
-    modes/flaschendrehen.h
+    modes/flaschendrehen.h \
+    modes/remotedbus.h
 
 FORMS    += mainwindow.ui
 
