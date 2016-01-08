@@ -14,7 +14,7 @@
    <string>AtmoLin</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="res.qrc">
+   <iconset>
     <normaloff>:/img/icon</normaloff>:/img/icon</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -51,6 +51,7 @@
     <property name="title">
      <string>A&amp;tmoLin</string>
     </property>
+    <addaction name="actionSettings"/>
     <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -61,10 +62,13 @@
     <string>&amp;Quit</string>
    </property>
   </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

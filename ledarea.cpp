@@ -7,6 +7,7 @@ LEDArea::LEDArea(int id, QObject *parent) :
     m_color(0,0,0)
 {
     this->setObjectName(QString::number(m_id));
+    qDebug() << this << "created";
 }
 
 LEDArea::~LEDArea()

@@ -15,7 +15,7 @@ AtmoLight::AtmoLight(QString portName, QList<int> order, QObject *parent) :
     m_serialPort.setDataBits(QSerialPort::Data8);
     m_serialPort.setStopBits(QSerialPort::OneStop);
 
-    for(int i = 0; i<m_ledAreaOrderList.size();i++){
+    for(int i = 0; i < m_ledAreaOrderList.size(); i++){
         LEDArea *ledarea = new LEDArea(i, this);
         m_ledAreaList.append(ledarea);
     }

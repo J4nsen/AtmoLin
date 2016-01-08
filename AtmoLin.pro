@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     modes/individualfixedcolor.cpp \
     modes/worm.cpp \
     modes/flaschendrehen.cpp \
-    modes/remotedbus.cpp
+    modes/remotedbus.cpp \
+    settingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     atmolight.h \
@@ -33,9 +34,11 @@ HEADERS  += mainwindow.h \
     modes/individualfixedcolor.h \
     modes/worm.h \
     modes/flaschendrehen.h \
-    modes/remotedbus.h
+    modes/remotedbus.h \
+    settingsdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settingsdialog.ui
 
 include(support/Qt-Color-Widgets/color_widgets.pri)
 

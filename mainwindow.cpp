@@ -14,6 +14,7 @@
 #include "modes/worm.h"
 #include "modes/flaschendrehen.h"
 #include "modes/remotedbus.h"
+#include "settingsdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -118,7 +119,7 @@ void MainWindow::loadAtmoLights()
 
     // Create ordered list
     foreach(AtmoLight *al, m_atmoLightList){
-        for(int i = 0; i<al->ledAreaList().size(); i++){
+        for(int i = 0; i < al->ledAreaList().size(); i++){
             m_ledAreaListOrdered.append(al->ledAreaList().at(al->ledAreaOrderList()[i]));
         }
     }
@@ -204,4 +205,10 @@ void MainWindow::saveSettings()
 void MainWindow::on_actionQuit_triggered()
 {
     QApplication::instance()->quit();
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    SettingsDialog settings;
+    settings.exec();
 }

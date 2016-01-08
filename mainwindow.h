@@ -30,6 +30,8 @@ private slots:
     void on_aboutToQuit();
     void on_modeChanged(QString mode);
 
+    void on_actionSettings_triggered();
+
 private:
     Ui::MainWindow *ui;
     QList<AtmoLight*> m_atmoLightList;
