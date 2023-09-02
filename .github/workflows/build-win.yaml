@@ -25,6 +25,6 @@ jobs:
       - name: Set up MSVC Environment, run qmake and nmake
         shell: cmd
         run: |
-          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
           qmake
           nmake
