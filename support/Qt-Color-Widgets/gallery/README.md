@@ -1,5 +1,5 @@
-Color Widgets
-=============
+Color Widgets Gallery
+=====================
 
 Color2DSlider
 -------------
@@ -72,3 +72,20 @@ GradientSlider and HueSlider
 
 **HueSlider** is specifically made to select a hue and has more information
 about the represented color.
+
+
+GradientEditor
+--------------
+![GradientEditor](GradientEditor.png)
+
+**GradientEditor** is similar in appearance to **GradientSlider** but it's for editing the gradient.
+
+
+GradientListModel and GradientDelegate
+--------------------------------------
+![GradientListModel](GradientListModel_combo.png)
+![GradientListModel](GradientListModel_view.png)
+
+**GradientListModel** is a <tt>QAbstractListModel</tt> used to list gradients (useful for combo boxes, item views and the like).
+
+**GradientDelegate** is an item delegate to edit gradients in an item view.

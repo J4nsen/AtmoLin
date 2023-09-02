@@ -1,7 +1,12 @@
+/*
+ * SPDX-FileCopyrightText: 2013-2023 Mattia Basaglia
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
+
 #ifndef HUE_SLIDER_PLUGIN_HPP
 #define HUE_SLIDER_PLUGIN_HPP
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class HueSlider_Plugin : public QObject, public QDesignerCustomWidgetInterface
 {

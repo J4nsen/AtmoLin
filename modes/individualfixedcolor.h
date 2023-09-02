@@ -2,7 +2,7 @@
 #define INDIVIDUALFIXEDCOLOR_H
 
 #include "abstractmode.h"
-#include <color_wheel.hpp>
+#include <QtColorWidgets/color_wheel.hpp>
 #include <QSpinBox>
 #include <QVBoxLayout>
 

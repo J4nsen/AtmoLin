@@ -2,12 +2,12 @@ Color Widgets
 =============
 
 Here is a color dialog that is more user-friendly than the default QColorDialog
-and several color-related widgets
+and several other color-related widgets
 
 The provided widgets are:
 
 * ColorWheel,         An analog widget used to select a color
-* ColorPreview,       A simple widget that dislay a color
+* ColorPreview,       A simple widget that displays a color
 * GradientSlider,     A slider that has a gradient background
 * HueSlider,          A variant of GradientSlider that has a rainbow background
 * ColorSelector,      A ColorPreview that shows a ColorDialog when clicked
@@ -17,6 +17,8 @@ The provided widgets are:
 * ColorPaletteWidget, A widget to use and manage a list of palettes
 * Color2DSlider,      An analog widget used to select 2 color components
 * ColorLineEdit,      A widget to manipulate a string representing a color
+* HarmonyColorWheel,  A ColorWheel which allows defining multiple colors, separated by hue
+* GradientListModel,  A QAbstractListModel used to list gradients (useful for combo boxes, list views and the like)
 
 they are all in the color_widgets namespace.
 
@@ -28,8 +30,14 @@ Using it in a project
 
 For QMake-based projects, include color_widgets.pri in the QMake project file.
 For CMake-based projects, add this as subdirectory, it will be compiled as a
-library and you can link the required targets to ColorWidgets-qt5.
+library and you can link the required targets to ColorWidgets.
 All the required files are in ./src and ./include.
+
+
+Documentation
+-------------
+
+See https://mattbas.gitlab.io/Qt-Color-Widgets/
 
 
 Installing as a Qt Designer/Creator Plugin
@@ -41,19 +49,24 @@ Compile the library and install in
 (Qt SDK)/Tools/QtCreator/bin/designer/
 (Qt SDK)/(Qt Version)/(Toolchain)/plugins/designer
 
-cd color_widgets_designer_plugin && qmake && make && make install
+    mkdir build && cd build && cmake .. && make QtColorWidgetsPlugin && make install
 
 
 Latest Version
 --------------
 
-The latest version of the sources can be found at the following locations
-https://github.com/mbasaglia/Qt-Color-Widgets
-git://github.com/mbasaglia/Qt-Color-Widgets.git
+The latest version of the sources can be found at the following locations:
+
+* https://gitlab.com/mattbas/Qt-Color-Widgets
+* git@gitlab.com:mattbas/Qt-Color-Widgets.git
 
 
 License
 -------
 
-LGPLv3+, See COPYING
-Copyright (C) 2012-2015 Mattia Basaglia <mattia.basaglia@gmail.com>
+LGPLv3+, See COPYING.
+As a special exception, this library can be included in any project under the
+terms of any of the GNU liceses, distributing the whole project under a
+different GNU license, see LICENSE-EXCEPTION for details.
+
+Copyright (C) 2013-2020 Mattia Basaglia <dev@dragon.best>

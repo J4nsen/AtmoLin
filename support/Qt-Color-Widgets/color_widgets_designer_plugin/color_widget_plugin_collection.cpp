@@ -1,24 +1,9 @@
-/**
- * \file
+/*
+ * SPDX-FileCopyrightText: 2013-2020 Mattia Basaglia
  *
- * \author Mattia Basaglia
- *
- * \copyright Copyright (C) 2013-2015 Mattia Basaglia
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
  */
+
 #include "color_widget_plugin_collection.hpp"
 #include "color_preview_plugin.hpp"
 #include "color_wheel_plugin.hpp"
@@ -30,6 +15,7 @@
 #include "color_palette_widget_plugin.hpp"
 #include "color_2d_slider_plugin.hpp"
 #include "color_line_edit_plugin.hpp"
+#include "gradient_editor_plugin.hpp"
 // add new plugin headers above this line
 
 ColorWidgets_PluginCollection::ColorWidgets_PluginCollection(QObject *parent) :
@@ -45,6 +31,7 @@ ColorWidgets_PluginCollection::ColorWidgets_PluginCollection(QObject *parent) :
     widgets.push_back(new ColorPaletteWidget_Plugin(this));
     widgets.push_back(new Color2DSlider_Plugin(this));
     widgets.push_back(new ColorLineEdit_Plugin(this));
+    widgets.push_back(new GradientEditor_Plugin(this));
     // add new plugins above this line
 }
 
@@ -52,8 +39,3 @@ QList<QDesignerCustomWidgetInterface *> ColorWidgets_PluginCollection::customWid
 {
     return widgets;
 }
-
-#ifndef FRAMEWORK_QT5
-#include <QtCore/qplugin.h>
-Q_EXPORT_PLUGIN2(color_widgets, ColorWidgets_PluginCollection)
-#endif
