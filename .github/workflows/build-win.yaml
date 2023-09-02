@@ -23,4 +23,4 @@ jobs:
           tools-only: 'false'
           
       - name: Build Qt Application
-        run: qmake && make -j$(nproc)
+        run: qmake && make
