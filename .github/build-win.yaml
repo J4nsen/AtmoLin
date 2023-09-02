@@ -1,0 +1,24 @@
+name: Build AtmoLin für Windows
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3.3.0
+        with:
+          version: '5.15.2'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          dir: '${{ github.workspace }}/example/'
+          install-deps: 'true'
+          setup-python: 'true'
+          set-env: 'true'
+          tools-only: 'false'
+          
+      - name: Build Qt Application
+        run: qmake && make -j$(nproc)
