@@ -19,13 +19,10 @@ jobs:
           install-deps: 'true'
           setup-python: 'true'
       
-      - name: Debug
+      - uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Run qmake and nmake
         shell: cmd
         run: |
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\"
-          
-          
-      - name: Set up MSVC Environment, run qmake and nmake
-        shell: cmd
-        run: |
-          C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat
+          qmake
+          nmake
