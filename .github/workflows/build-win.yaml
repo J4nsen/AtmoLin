@@ -14,7 +14,7 @@ jobs:
         with:
           version: '5.15.2'
           target: 'desktop'
-          arch: 'win64_msvc2019_64'
+          arch: 'win64_mingw81'
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
           setup-python: 'true'
