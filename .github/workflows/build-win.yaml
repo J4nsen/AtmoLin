@@ -23,4 +23,4 @@ jobs:
           archives: 'qtserialport qtbase'
           
       - name: Build Qt Application
-        run: qmake && make
+        run: qmake && nmake
