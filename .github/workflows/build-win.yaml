@@ -12,15 +12,15 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.3.0
         with:
-          version: '5.15.2'
-          target: 'desktop'
-          arch: 'win64_mingw81'
+         version: '5.15.2'
           host: 'windows'
-          dir: '${{ github.workspace }}/example/'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
           install-deps: 'true'
           setup-python: 'true'
           set-env: 'true'
           tools-only: 'false'
+          archives: 'qtserialport qtbase'
           
       - name: Build Qt Application
         run: qmake && make
