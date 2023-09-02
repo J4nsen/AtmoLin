@@ -4,7 +4,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -15,6 +15,7 @@ jobs:
           version: '5.15.2'
           target: 'desktop'
           arch: 'win64_mingw81'
+          host: 'windows'
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
           setup-python: 'true'
