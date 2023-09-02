@@ -18,9 +18,6 @@ jobs:
           arch: 'win64_msvc2019_64'
           install-deps: 'true'
           setup-python: 'true'
-          set-env: 'true'
-          tools-only: 'false'
-          archives: 'qtserialport qtbase'
       
       - name: Debug
         shell: cmd
