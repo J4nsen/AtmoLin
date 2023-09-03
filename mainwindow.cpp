@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include <QSettings>
-#include <QtDBus/QtDBus>
 #include <QDebug>
 #include <QTimer>
 #include <QTime>
@@ -13,7 +12,6 @@
 #include "modes/individualfixedcolor.h"
 #include "modes/worm.h"
 #include "modes/flaschendrehen.h"
-#include "modes/remotedbus.h"
 #include "settingsdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -54,34 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //
 
-    // Seed for RNG
-    qsrand(QTime::currentTime().msec());
-    //
-
     loadSettings();
-
-    if (!QDBusConnection::sessionBus().isConnected()) {
-        qWarning("Cannot connect to the D-Bus session bus.\n"
-                 "Please check your system settings and try again.\n");
-    }
-    else{
-        qDebug() << this << "Connected to DBus";
-        if (!QDBusConnection::sessionBus().registerService("org.wiele.AtmoLin")) {
-            qDebug() << this << QDBusConnection::sessionBus().lastError().message();
-        }
-        else{
-            qDebug() << this << "Registered DBus Service";
-            RemoteDBus *remotedbus = new RemoteDBus(m_ledAreaListOrdered);
-            connect(remotedbus, SIGNAL(updateLEDs()), this, SLOT(on_updateLEDs()));
-            QDBusConnection::sessionBus().registerObject("/", remotedbus, QDBusConnection::ExportAllSlots);
-            int i = 0;
-            foreach(LEDArea *ledarea, m_ledAreaListOrdered){
-                QDBusConnection::sessionBus().registerObject("/LEDs/"+QString::number(i), ledarea, QDBusConnection::ExportAllSlots);
-                i++;
-            }
-
-        }
-    }
 }
 
 MainWindow::~MainWindow()

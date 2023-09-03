@@ -1,6 +1,7 @@
 #include "flaschendrehen.h"
 
 #include <QDebug>
+#include <QRandomGenerator>
 
 Flaschendrehen::Flaschendrehen(QList<LEDArea *> leds, QObject *parent) :
     AbstractMode(leds, parent),
@@ -38,7 +39,7 @@ void Flaschendrehen::startRoundTimer()
     // Rand Time
     int diff = m_secondsBetweenRoundsMax-m_secondsBetweenRoundsMin;
     int rand = 0;
-    if(diff != 0) rand = (qrand() % diff);
+    if(diff != 0) rand = ( QRandomGenerator::global()->generate() % diff);
     rand += m_secondsBetweenRoundsMin;
     //
     qDebug() << this << "Next round in" << rand;
@@ -51,7 +52,7 @@ void Flaschendrehen::startNewRound()
     m_roundTimer->stop();
 
     // Select Random Light
-    m_randLight = qrand() % m_ledAreaListOrdered.size();
+    m_randLight = QRandomGenerator::global()->generate() % m_ledAreaListOrdered.size();
     qDebug() << this << "Rand light" << m_randLight;
     //
 
@@ -65,7 +66,7 @@ void Flaschendrehen::on_flickerIntervalTimerTimeout()
     QList<QColor> randColorList;
     for(int i=0; i<m_ledAreaListOrdered.size(); i++){
         QColor randColor;
-        randColor.setHsv(qrand()%360, 255, 255);
+        randColor.setHsv(QRandomGenerator::global()->generate()%360, 255, 255);
         randColorList.append(randColor);
     }
 

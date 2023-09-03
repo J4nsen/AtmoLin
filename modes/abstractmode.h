@@ -7,7 +7,7 @@
 #include <QSettings>
 #include <QTimer>
 
-#include "ledarea.h"
+#include "../ledarea.h"
 
 class AbstractMode : public QObject
 {
