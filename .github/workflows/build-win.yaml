@@ -32,9 +32,13 @@ jobs:
         
       - name: Package 
         run: windeployqt AtmoLin.exe --pdb --release --compiler-runtime
-        
+      
+      - name: Zip
+        run: |
+          7z a AtmoLin.zip AtmoLin.exe *.dll -r
+          
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "*.exe,*.dll"
+          artifacts: "AtmoLin.exe,*.dll"
           allowUpdates: true
