@@ -30,6 +30,9 @@ jobs:
       - name: Build with NMAKE
         run: nmake
         
+      - name: Package 
+        run: windeployqt AtmoLin.exe --pdb --release --compiler-runtime
+        
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
