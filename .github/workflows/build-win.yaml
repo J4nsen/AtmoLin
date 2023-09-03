@@ -20,9 +20,9 @@ jobs:
           setup-python: 'true'
       
       - uses: ilammy/msvc-dev-cmd@v1
-
-      - name: Run qmake and nmake
-        shell: cmd
-        run: |
-          cmake .
-          nmake
+      
+      - name: Configure CMake
+        run: cmake . -G "NMake Makefiles"
+        
+      - name: Build with NMAKE
+        run: nmake
