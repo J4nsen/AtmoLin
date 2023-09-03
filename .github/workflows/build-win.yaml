@@ -31,7 +31,7 @@ jobs:
         run: nmake
         
       - name: Package 
-        run: windeployqt AtmoLin.exe --pdb --release --compiler-runtime
+        run: windeployqt AtmoLin.exe --pdb --release --compiler-runtime --libdir .
       
       - name: Zip
         run: |
